@@ -6,6 +6,8 @@ app.set('view engine' , 'ejs')
 // 设置模板页面的存放路径 不设置默认在views目录
 app.set('views' , './views')
 
+app.use('/node_modules',express.static('./node_modules'))
+
 app.get('/',(req , res) =>{
     res.send('测试用的 ok')
     // res.render('index',{})
