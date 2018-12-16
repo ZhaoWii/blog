@@ -4,6 +4,19 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
 
+const session = require('express-session')
+
+// 注册 session 中间件
+// 只要住的了session 中间件 那么 今后只要能访问到req这个对象 必然能访问到 req.session 
+app.use(session({
+        secret:'这是加密的密钥',
+        resave:false , 
+        saveUninitialized:false
+    }))
+
+
+
+
 app.use(bodyParser.urlencoded({ extended: false }))
 // 设置 默认采用的模板引擎名称
 app.set('view engine', 'ejs')
@@ -22,9 +35,9 @@ app.use('/node_modules', express.static('./node_modules'))
 // 使用fs模块读取 router目录下所有的文件名
 fs.readdir('./router',(err,files) => {
     if(err) return console.log(err.message)
-    files.forEach(filename => {
+    files.forEach(filename =>  {
         // bug 相对路径找得到 绝对路径找不到
-        console.log('./router/'+filename)
+        // console.log('./router/'+filename)
         app.use(require('./router/'+filename))
         // let filePath = path.join(__dirname,'./router/' + filename)
         // console.log(filePath)
