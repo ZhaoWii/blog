@@ -35,7 +35,7 @@ app.use('/node_modules', express.static('./node_modules'))
 // 使用fs模块读取 router目录下所有的文件名
 fs.readdir('./router',(err,files) => {
     if(err) return console.log(err.message)
-    files.forEach(filename =>  {
+    files.forEach(filename => {
         // bug 相对路径找得到 绝对路径找不到
         // console.log('./router/'+filename)
         app.use(require('./router/'+filename))
