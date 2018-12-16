@@ -56,9 +56,22 @@ module.exports = {
         conn.query(loginSql, [req.body.username, req.body.password], (err, result) => {
             //    console.log(result)
             if (err || result.length === 0) return res.status(400).send({ status: 400, msg: '登录失败!请重试!' })
+
+            // 把成功之后的信息挂在 session上
+            req.session.user = result[0]
+            // 把用户登录成功只有的结果 挂载到session上
+            req.session.islogin = true
             // 登录成功
             res.send({ status: 200, msg: '登录成功!' })
 
+            
+        })
+    },
+    // 注销
+    getLogoutHandler(req,res){
+        req.session.destroy(function() {
+            //使用  res.redirect 可以让客户端重新访问 指定的页面
+            res.redirect('/')
         })
     }
 }
