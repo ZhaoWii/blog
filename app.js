@@ -11,7 +11,9 @@ const session = require('express-session')
 app.use(session({
         secret:'这是加密的密钥',
         resave:false , 
-        saveUninitialized:false
+        saveUninitialized:false,
+        //如果不设置过期时间 默认 关闭浏览器即过期 无法储存有效的cookie
+        cookie:{maxAge:5000}
     }))
 
 
